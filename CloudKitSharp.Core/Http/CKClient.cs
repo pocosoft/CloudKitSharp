@@ -38,13 +38,39 @@ namespace CloudKitSharp.Core.Http
             _requestKeyID = requestKeyID;
             _privateKeyString = privateKeyString;
         }
-
+        /// <summary>
+        /// Fetching Current User Identity (users/caller)
+        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/FetchCurrentUserIdentity.html#//apple_ref/doc/uid/TP40015240-CH27-SW1
+        /// </summary>
+        /// <param name="webAuthToken"></param>
+        /// <returns></returns>
         public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string? webAuthToken)
         {
             var request = new UsersCallerRequest();
             return await Get<UsersCallerResponse>(request, webAuthToken);
         }
-        public async Task<RestResponse<T>> Get<T>(ICKRequest request, string? webAuthToken)
+        /// <summary>
+        /// Discovering All User Identities (GET users/discover)
+        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/DiscoveringAllUserIdentities.html#//apple_ref/doc/uid/TP40015240-CH31-SW1
+        /// </summary>
+        /// <param name="webAuthToken"></param>
+        /// <returns></returns>
+        public async Task<RestResponse<UsersCallerResponse>> GetUsersDiscover(string? webAuthToken)
+        {
+            var request = new UserDiscoverRequest();
+            return await Fetch<UsersCallerResponse>(request, webAuthToken);
+        }
+        async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string? webAuthToken)
+        {
+            switch (request.Method)
+            {
+                case Method.Get:
+                    return await Get<T>(request, webAuthToken);
+                default:
+                    throw new Exception();
+            }
+        }
+        async Task<RestResponse<T>> Get<T>(ICKRequest request, string? webAuthToken)
         {
             var url = request.GetUrl(_container);
             Debug.Print(url);
@@ -56,7 +82,7 @@ namespace CloudKitSharp.Core.Http
             }
             return await _restClient.ExecuteAsync<T>(restRequest);
         }
-        public async Task<RestResponse<T>> Post<T>(ICKRequest request, string webAuthToken)
+        async Task<RestResponse<T>> Post<T>(ICKRequest request, string webAuthToken)
         {
             var restRequest = new RestRequest(request.GetUrl(_container), Method.Post);
             Debug.Print("Request" + restRequest.ToString());

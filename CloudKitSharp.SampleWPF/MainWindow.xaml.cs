@@ -62,6 +62,11 @@ namespace CloudKitSharp.SampleWPF
         {
             GetWebAuthToken(_webAuthToken);
         }
+        private async void GetUserDiscoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            var response = await _client.GetUsersDiscover(_webAuthToken);
+            DebugConsole.Text = response.Content;
+        }
         private void GetWebAuthToken(string webAuthToken)
         {
             Debug.Print(webAuthToken);
