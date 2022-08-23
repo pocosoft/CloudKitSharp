@@ -25,24 +25,66 @@ namespace CloudKitSharp.Core.Http
         private readonly string _container;
         private readonly string _apiToken;
         private readonly string _requestKeyID;
-        private readonly string _privateKeyString = "";
+        private readonly string _privateKeyString;
         public CKClient(
             string container,
             string apiToken,
-            string requestKeyID
+            string requestKeyID,
+            string privateKeyString
             )
         {
             _container = container;
             _apiToken = apiToken;
             _requestKeyID = requestKeyID;
+            _privateKeyString = privateKeyString;
         }
-
-        public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string? webAuthToken)
+        /// <summary>
+        /// Fetching Current User Identity (users/caller)
+        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/FetchCurrentUserIdentity.html#//apple_ref/doc/uid/TP40015240-CH27-SW1
+        /// </summary>
+        /// <param name="webAuthToken"></param>
+        /// <returns></returns>
+        public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string webAuthToken)
         {
             var request = new UsersCallerRequest();
             return await Get<UsersCallerResponse>(request, webAuthToken);
         }
-        public async Task<RestResponse<T>> Get<T>(ICKRequest request, string? webAuthToken)
+        /// <summary>
+        /// Discovering All User Identities (GET users/discover)
+        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/DiscoveringAllUserIdentities.html#//apple_ref/doc/uid/TP40015240-CH31-SW1
+        /// </summary>
+        /// <param name="webAuthToken"></param>
+        /// <returns></returns>
+        public async Task<RestResponse<UsersCallerResponse>> GetUsersDiscover(string webAuthToken)
+        {
+            var request = new UserDiscoverRequest();
+            return await Fetch<UsersCallerResponse>(request, webAuthToken);
+        }
+        /// <summary>
+        /// Fetching Records Using a Query (records/query)
+        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/QueryingRecords.html#//apple_ref/doc/uid/TP40015240-CH5-SW4
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="webAuthToken"></param>
+        /// <returns></returns>
+        public async Task<RestResponse<RecordsQueryResponse>> PostRecordsQuery(CKDatabase database, RecordsQueryRequest.Parameter parameter, string webAuthToken)
+        {
+            var request = new RecordsQueryRequest(database, parameter);
+            return await Fetch<RecordsQueryResponse>(request, webAuthToken);
+        }
+        async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string webAuthToken)
+        {
+            switch (request.Method)
+            {
+                case Method.Get:
+                    return await Get<T>(request, webAuthToken);
+                case Method.Post:
+                    return await Post<T>(request, webAuthToken);
+                default:
+                    throw new Exception();
+            }
+        }
+        async Task<RestResponse<T>> Get<T>(ICKRequest request, string webAuthToken)
         {
             var url = request.GetUrl(_container);
             Debug.Print(url);
@@ -54,7 +96,7 @@ namespace CloudKitSharp.Core.Http
             }
             return await _restClient.ExecuteAsync<T>(restRequest);
         }
-        public async Task<RestResponse<T>> Post<T>(ICKRequest request, string webAuthToken)
+        async Task<RestResponse<T>> Post<T>(ICKRequest request, string webAuthToken)
         {
             var restRequest = new RestRequest(request.GetUrl(_container), Method.Post);
             Debug.Print("Request" + restRequest.ToString());
@@ -83,7 +125,7 @@ namespace CloudKitSharp.Core.Http
         public string MakeMessage(ICKRequest request, DateTime datetime)
         {
             var body = MakeRequestBodyString(request);
-            return MakeDateByISO8601(datetime) + ":" + Base64EncodedBodyString(body) + ":" + request.SubPath;
+            return MakeDateByISO8601(datetime) + ":" + Base64EncodedBodyString(body) + ":" + request.Path(_container);
         }
         string MakeRequestBodyString(object requestBody)
         {

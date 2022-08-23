@@ -15,4 +15,24 @@
     <ProjectReference Include="..\CloudKitSharp.Core\CloudKitSharp.Core.csproj" />
   </ItemGroup>
 
+    <ItemGroup>
+		<EmbeddedResource Include=".\eckey.pem" />
+	</ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Settings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Settings.settings</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Settings.settings">
+        <Generator>SettingsSingleFileGenerator</Generator>
+        <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      </None>
+    </ItemGroup>
+
+
 </Project>
