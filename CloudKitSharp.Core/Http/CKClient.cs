@@ -85,7 +85,7 @@ namespace CloudKitSharp.Core.Http
         public string MakeMessage(ICKRequest request, DateTime datetime)
         {
             var body = MakeRequestBodyString(request);
-            return MakeDateByISO8601(datetime) + ":" + Base64EncodedBodyString(body) + ":" + request.SubPath;
+            return MakeDateByISO8601(datetime) + ":" + Base64EncodedBodyString(body) + ":" + request.Path(_container);
         }
         string MakeRequestBodyString(object requestBody)
         {

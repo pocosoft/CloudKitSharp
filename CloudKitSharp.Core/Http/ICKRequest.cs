@@ -12,8 +12,9 @@ namespace CloudKitSharp.Core.Http
         public Method Method { get;  }
         public string SubPath { get; }
         public object? Body { get; }
-        public string Path => "https://api.apple-cloudkit.com";
-        public string GetUrl(string container) => $"{Path}/database/1/{container}/{Environment.ToString().ToLower()}{SubPath}";
+        public string Root => "https://api.apple-cloudkit.com";
+        public string Path(string container) => $"/database/1/{container}/{Environment.ToString().ToLower()}{SubPath}";
+        public string GetUrl(string container) => $"{Root}{Path(container)}";
 
         public CKEnvironment Environment
         {

@@ -40,7 +40,6 @@ namespace CloudKitSharp.SampleWPF
                         using (StreamReader sr = new StreamReader(stream))
                         {
                             key = sr.ReadToEnd();
-                            Debug.Print(key);
                             sr.Close();
                         }
                     }
