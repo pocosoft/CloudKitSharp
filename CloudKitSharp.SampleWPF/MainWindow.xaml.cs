@@ -34,6 +34,7 @@ namespace CloudKitSharp.SampleWPF
                 "b2eb419a4ab40758d32657a0d07cf84d44553891590095b9d89fa674d9b8a650"
                 );
             var response = await ckClient.GetUsersCaller(null);
+            DebugConsole.Text = response.Content;
         }
     }
 }

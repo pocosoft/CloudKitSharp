@@ -37,12 +37,12 @@ namespace CloudKitSharp.Core.Http
             _requestKeyID = requestKeyID;
         }
 
-        public async Task<Result<UsersCallerResponse>> GetUsersCaller(string? webAuthToken)
+        public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string? webAuthToken)
         {
             var request = new UsersCallerRequest();
             return await Get<UsersCallerResponse>(request, webAuthToken);
         }
-        public async Task<Result<T>> Get<T>(ICKRequest request, string? webAuthToken)
+        public async Task<RestResponse<T>> Get<T>(ICKRequest request, string? webAuthToken)
         {
             var url = request.GetUrl(_container);
             Debug.Print(url);
@@ -52,17 +52,9 @@ namespace CloudKitSharp.Core.Http
             {
                 restRequest.AddQueryParameter(CKWebAuthTokenKey, webAuthToken);
             }
-            RestResponse<T> response = await _restClient.ExecuteAsync<T>(restRequest);
-            Debug.Print(response.Content);
-            if (response.IsSuccessful)
-            {
-                var result = JsonConvert.DeserializeObject<T>(response.Content);
-                return new Result<T>(result);
-            }
-            var error = CKError.Parse(response.Content);
-            return new Result<T>(error);
+            return await _restClient.ExecuteAsync<T>(restRequest);
         }
-        public async Task<Result<T>> Post<T>(ICKRequest request, string webAuthToken)
+        public async Task<RestResponse<T>> Post<T>(ICKRequest request, string webAuthToken)
         {
             var restRequest = new RestRequest(request.GetUrl(_container), Method.Post);
             Debug.Print("Request" + restRequest.ToString());
@@ -81,15 +73,7 @@ namespace CloudKitSharp.Core.Http
                 restRequest.AddJsonBody(request.Body, "application/json");
             }
             Debug.Print(JsonConvert.SerializeObject(request.Body));
-            RestResponse<T> response = await _restClient.ExecuteAsync<T>(restRequest);
-            Debug.Print(response.Content);
-            if (response.IsSuccessful && response.Content != null)
-            {
-                var result = JsonConvert.DeserializeObject<T>(response.Content);
-                return new Result<T>(result);
-            }
-            var error = CKError.Parse(response.Content);
-            return new Result<T>(error);
+            return await _restClient.ExecuteAsync<T>(restRequest);
         }
 
         public string MakeDateByISO8601(DateTime datetime)
