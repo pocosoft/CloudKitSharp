@@ -8,7 +8,9 @@
         Title="CloudKitSampleWPF" Height="450" Width="800">
     <Grid>
         <StackPanel>
-            <Button Content="Sign in iCloud" HorizontalAlignment="Left" Margin="16" VerticalAlignment="Top" Click="Button_Click"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Get User Caller" HorizontalAlignment="Left" Margin="16" VerticalAlignment="Top" Click="Button_Click"/>
+            </StackPanel>
             <ScrollViewer Background="Black" Height="380">
                 <TextBlock x:Name="DebugConsole" Foreground="White" Text="Debug console area"/>
             </ScrollViewer>
