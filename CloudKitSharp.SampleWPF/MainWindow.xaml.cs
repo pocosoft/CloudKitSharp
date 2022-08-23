@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CloudKitSharp.Core.Http;
+using CloudKitSharp.Core.Model;
 
 namespace CloudKitSharp.SampleWPF
 {
@@ -76,6 +77,14 @@ namespace CloudKitSharp.SampleWPF
         private async void GetUserDiscoverButton_Click(object sender, RoutedEventArgs e)
         {
             var response = await _client.GetUsersDiscover(_webAuthToken);
+            DebugConsole.Text = response.Content;
+        }
+        private async void PostRecordsQueryButton_Click(object sender, RoutedEventArgs e)
+        {
+            var query = new QueryDictionary("items");
+            var zoneID = new ZoneIDDictionary("_defaultZone");
+            var parameter = new RecordsQueryRequest.Parameter(query, zoneID);
+            var response = await _client.PostRecordsQuery(CKDatabase.Public, parameter, _webAuthToken);
             DebugConsole.Text = response.Content;
         }
         private void GetWebAuthToken(string webAuthToken)

@@ -44,7 +44,7 @@ namespace CloudKitSharp.Core.Http
         /// </summary>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string? webAuthToken)
+        public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string webAuthToken)
         {
             var request = new UsersCallerRequest();
             return await Get<UsersCallerResponse>(request, webAuthToken);
@@ -55,22 +55,36 @@ namespace CloudKitSharp.Core.Http
         /// </summary>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<RestResponse<UsersCallerResponse>> GetUsersDiscover(string? webAuthToken)
+        public async Task<RestResponse<UsersCallerResponse>> GetUsersDiscover(string webAuthToken)
         {
             var request = new UserDiscoverRequest();
             return await Fetch<UsersCallerResponse>(request, webAuthToken);
         }
-        async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string? webAuthToken)
+        /// <summary>
+        /// Fetching Records Using a Query (records/query)
+        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/QueryingRecords.html#//apple_ref/doc/uid/TP40015240-CH5-SW4
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="webAuthToken"></param>
+        /// <returns></returns>
+        public async Task<RestResponse<RecordsQueryResponse>> PostRecordsQuery(CKDatabase database, RecordsQueryRequest.Parameter parameter, string webAuthToken)
+        {
+            var request = new RecordsQueryRequest(database, parameter);
+            return await Fetch<RecordsQueryResponse>(request, webAuthToken);
+        }
+        async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string webAuthToken)
         {
             switch (request.Method)
             {
                 case Method.Get:
                     return await Get<T>(request, webAuthToken);
+                case Method.Post:
+                    return await Post<T>(request, webAuthToken);
                 default:
                     throw new Exception();
             }
         }
-        async Task<RestResponse<T>> Get<T>(ICKRequest request, string? webAuthToken)
+        async Task<RestResponse<T>> Get<T>(ICKRequest request, string webAuthToken)
         {
             var url = request.GetUrl(_container);
             Debug.Print(url);

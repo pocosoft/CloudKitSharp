@@ -11,6 +11,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Get User caller" HorizontalAlignment="Left" Margin="16" VerticalAlignment="Top" Click="Button_Click"/>
                 <Button Content="Get User discover" HorizontalAlignment="Left" Margin="16" VerticalAlignment="Top" Click="GetUserDiscoverButton_Click"/>
+                <Button Content="Post Records query" HorizontalAlignment="Left" Margin="16" VerticalAlignment="Top" Click="PostRecordsQueryButton_Click"/>
             </StackPanel>
             <ScrollViewer Background="Black" Height="380">
                 <TextBlock x:Name="DebugConsole" Foreground="White" Text="Debug console area"/>
