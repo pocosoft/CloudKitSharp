@@ -15,4 +15,9 @@
     <ProjectReference Include="..\CloudKitSharp.Core\CloudKitSharp.Core.csproj" />
   </ItemGroup>
 
+    <ItemGroup>
+		<EmbeddedResource  Include=".\eckey.pem" />
+	</ItemGroup>
+
+
 </Project>

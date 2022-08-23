@@ -25,16 +25,18 @@ namespace CloudKitSharp.Core.Http
         private readonly string _container;
         private readonly string _apiToken;
         private readonly string _requestKeyID;
-        private readonly string _privateKeyString = "";
+        private readonly string _privateKeyString;
         public CKClient(
             string container,
             string apiToken,
-            string requestKeyID
+            string requestKeyID,
+            string privateKeyString
             )
         {
             _container = container;
             _apiToken = apiToken;
             _requestKeyID = requestKeyID;
+            _privateKeyString = privateKeyString;
         }
 
         public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string? webAuthToken)
