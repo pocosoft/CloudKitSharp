@@ -24,7 +24,18 @@ namespace CloudKitSharp.SampleWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string? _webAuthToken;
+        private string _webAuthToken
+        {
+            get
+            {
+                return Settings.Default.WebAuthToken;
+            }
+            set
+            {
+                Settings.Default.WebAuthToken = value;
+                Settings.Default.Save();
+            }
+        }
         private static string privateKeyString
         {
             get
