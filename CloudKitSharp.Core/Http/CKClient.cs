@@ -47,7 +47,7 @@ namespace CloudKitSharp.Core.Http
         public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string webAuthToken)
         {
             var request = new UsersCallerRequest();
-            return await Get<UsersCallerResponse>(request, webAuthToken);
+            return await Fetch<UsersCallerResponse>(request, webAuthToken);
         }
         /// <summary>
         /// Discovering All User Identities (GET users/discover)
@@ -72,7 +72,7 @@ namespace CloudKitSharp.Core.Http
             var request = new RecordsQueryRequest(database, parameter);
             return await Fetch<RecordsQueryResponse>(request, webAuthToken);
         }
-        async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string webAuthToken)
+        public async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string webAuthToken)
         {
             switch (request.Method)
             {
@@ -118,11 +118,11 @@ namespace CloudKitSharp.Core.Http
             return await _restClient.ExecuteAsync<T>(restRequest);
         }
 
-        public string MakeDateByISO8601(DateTime datetime)
+        string MakeDateByISO8601(DateTime datetime)
         {
             return datetime.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'");
         }
-        public string MakeMessage(ICKRequest request, DateTime datetime)
+        string MakeMessage(ICKRequest request, DateTime datetime)
         {
             var body = MakeRequestBodyString(request);
             return MakeDateByISO8601(datetime) + ":" + Base64EncodedBodyString(body) + ":" + request.Path(_container);
@@ -152,6 +152,6 @@ namespace CloudKitSharp.Core.Http
                 throw new Exception("著名失敗");
             }
         }
-        static readonly SHA256 HashProvider = SHA256.Create();
+        private static readonly SHA256 HashProvider = SHA256.Create();
     }
 }
