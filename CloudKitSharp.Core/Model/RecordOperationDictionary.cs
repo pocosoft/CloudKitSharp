@@ -12,10 +12,6 @@ namespace CloudKitSharp.Core.Model
     /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/ModifyRecords.html#//apple_ref/doc/uid/TP40015240-CH2-SW1"/>
     public class RecordOperationDictionary
     {
-        public OperationTypeValues operationType { get; }
-        public RecordOperationDictionary(OperationTypeValues operationType)
-        {
-            this.operationType = operationType;
-        }   
+        public OperationTypeValues operationType { get; set; } = OperationTypeValues.update;
     }
 }

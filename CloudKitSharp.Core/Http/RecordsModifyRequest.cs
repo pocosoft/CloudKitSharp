@@ -27,17 +27,11 @@ namespace CloudKitSharp.Core.Http
         }
         public class Parameter
         {
-            public RecordOperationDictionary operations { get; }
-            public ZoneIDDictionary zoneID { get; }
+            public RecordOperationDictionary operations { get; set; }
+            public ZoneIDDictionary zoneID { get; set; }
 
             [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-            public bool numbersAsStrings { get; } = false;
-            public Parameter(RecordOperationDictionary operations, ZoneIDDictionary zoneID, bool numbersAsStrings = false)
-            {
-                this.operations = operations;
-                this.zoneID = zoneID;
-                this.numbersAsStrings = numbersAsStrings;
-            }
+            public bool numbersAsStrings { get; set; } = false;
         }
     }
 }
