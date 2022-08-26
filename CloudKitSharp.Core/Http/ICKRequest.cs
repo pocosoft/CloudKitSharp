@@ -23,7 +23,7 @@ namespace CloudKitSharp.Core.Http
 #if DEBUG
                 return CKEnvironment.Development;
 #else
-                return CKEnvironment.Prodiction;
+                return CKEnvironment.Production;
 #endif
             }
         }
