@@ -9,10 +9,6 @@
         /// <summary>
         /// The name that identifies the record zone. The default value is _defaultZone, which indicates the default zone of the current database. This key is required.
         /// </summary>
-        public string zoneName { get; set; }
-        public ZoneIDDictionary(string zoneName)
-        {
-            this.zoneName = zoneName;
-        }
+        public string zoneName { get; set; } = "";
     }
 }

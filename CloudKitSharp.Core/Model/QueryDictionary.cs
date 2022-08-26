@@ -11,22 +11,16 @@ namespace CloudKitSharp.Core.Model
         /// <summary>
         /// The name of the record type. This key is required.
         /// </summary>
-        public string recordType { get; }
+        public string recordType { get; set; } = "";
         /// <summary>
         /// An Array of filter dictionaries (described in Filter Dictionary) used to determine whether a record matches the query.
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public FilterDictionary? filterBy;
+        public FilterDictionary? filterBy { get; set; }
         /// <summary>
         /// An Array of sort descriptor dictionaries (described in Sort Descriptor Dictionary) that specify how to order the fetched records.
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public SortDescriptorDictionary? sortBy;
-        public QueryDictionary(string recordType, FilterDictionary? filterBy = null, SortDescriptorDictionary? sortBy = null)
-        {
-            this.recordType = recordType;
-            this.filterBy = filterBy;
-            this.sortBy = sortBy;
-        }
+        public SortDescriptorDictionary? sortBy { get; set; }
     }
 }
