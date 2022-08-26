@@ -1,10 +1,5 @@
 ﻿using CloudKitSharp.Core.Model;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CloudKitSharp.Core.Http
 {
