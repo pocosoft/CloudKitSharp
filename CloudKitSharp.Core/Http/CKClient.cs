@@ -1,16 +1,9 @@
 ﻿using EllipticCurve;
-using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace CloudKitSharp.Core.Http
 {
