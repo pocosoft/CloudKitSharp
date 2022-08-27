@@ -81,9 +81,17 @@ namespace CloudKitSharp.SampleWPF
         }
         private async void PostRecordsQueryButton_Click(object sender, RoutedEventArgs e)
         {
-            var query = new QueryDictionary("items");
-            var zoneID = new ZoneIDDictionary("_defaultZone");
-            var parameter = new RecordsQueryRequest.Parameter(query, zoneID);
+            var parameter = new RecordsQueryRequest.Parameter() 
+            {
+                query = new()
+                {
+                    recordType = "items"
+                },
+                zoneID = new()
+                {
+                    zoneName = "_defaultZone"
+                }
+            };
             var response = await _client.PostRecordsQuery(CKDatabase.Public, parameter, _webAuthToken);
             DebugConsole.Text = response.Content;
         }
