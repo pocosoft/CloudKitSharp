@@ -20,13 +20,8 @@ namespace CloudKitSharp.Core.Http
         }
         public class Parameter
         {
-            public QueryDictionary query { get; }
-            public ZoneIDDictionary zoneID { get; }
-            public Parameter(QueryDictionary query, ZoneIDDictionary zoneID)
-            {
-                this.query = query;
-                this.zoneID = zoneID;
-            }
+            public QueryDictionary query { get; set; } = new();
+            public ZoneIDDictionary zoneID { get; set; } = new();
         }
     }
 }
