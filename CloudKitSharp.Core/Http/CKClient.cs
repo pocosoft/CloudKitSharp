@@ -33,8 +33,8 @@ namespace CloudKitSharp.Core.Http
         }
         /// <summary>
         /// Fetching Current User Identity (users/caller)
-        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/FetchCurrentUserIdentity.html#//apple_ref/doc/uid/TP40015240-CH27-SW1
         /// </summary>
+        /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/FetchCurrentUserIdentity.html#//apple_ref/doc/uid/TP40015240-CH27-SW1"/>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
         public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string webAuthToken)
@@ -44,8 +44,8 @@ namespace CloudKitSharp.Core.Http
         }
         /// <summary>
         /// Discovering All User Identities (GET users/discover)
-        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/DiscoveringAllUserIdentities.html#//apple_ref/doc/uid/TP40015240-CH31-SW1
         /// </summary>
+        /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/DiscoveringAllUserIdentities.html#//apple_ref/doc/uid/TP40015240-CH31-SW1"/>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
         public async Task<RestResponse<UsersCallerResponse>> GetUsersDiscover(string webAuthToken)
@@ -55,8 +55,8 @@ namespace CloudKitSharp.Core.Http
         }
         /// <summary>
         /// Fetching Records Using a Query (records/query)
-        /// https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/QueryingRecords.html#//apple_ref/doc/uid/TP40015240-CH5-SW4
         /// </summary>
+        /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/QueryingRecords.html#//apple_ref/doc/uid/TP40015240-CH5-SW4"/>
         /// <param name="database"></param>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
@@ -64,6 +64,19 @@ namespace CloudKitSharp.Core.Http
         {
             var request = new RecordsQueryRequest(database, parameter);
             return await Fetch<RecordsQueryResponse>(request, webAuthToken);
+        }
+        /// <summary>
+        ///  Modifying Records(records/modify)
+        /// </summary>
+        /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/ModifyRecords.html#//apple_ref/doc/uid/TP40015240-CH2-SW9"/>
+        /// <param name="database"></param>
+        /// <param name="parameter"></param>
+        /// <param name="webAuthToken"></param>
+        /// <returns></returns>
+        public async Task<RestResponse<RecordsModifyResponse>> PostRecordModify(CKDatabase database, RecordsModifyRequest.Parameter parameter, string webAuthToken)
+        {
+            var request = new RecordsModifyRequest(database, parameter);
+            return await Fetch<RecordsModifyResponse>(request, webAuthToken);
         }
         public async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string webAuthToken)
         {

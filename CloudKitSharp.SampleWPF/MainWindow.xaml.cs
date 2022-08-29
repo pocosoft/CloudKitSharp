@@ -111,7 +111,7 @@ namespace CloudKitSharp.SampleWPF
             {
                 CKError error = CKError.Parse(response.Content);
                 Debug.Print(error.RedirectURL);
-                var web = new WebViewWinow(new Uri(error.RedirectURL));
+                var web = new WebViewWinow(new Uri(error.RedirectURL!));
                 web.GetWebAuthTokenDelegate += GetWebAuthToken;
                 web.ShowDialog();
             }
