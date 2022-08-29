@@ -1,9 +1,10 @@
 ﻿using EllipticCurve;
-using Newtonsoft.Json;
 using RestSharp;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CloudKitSharp.Core.Http
 {
@@ -118,9 +119,16 @@ namespace CloudKitSharp.Core.Http
             restRequest.AddHeader(RequestSignatureV1Key, signature);
             if (request.Body != null)
             {
-                restRequest.AddJsonBody(request.Body, "application/json");
+                var jsonOptions = new JsonSerializerOptions()
+                {
+                    WriteIndented = true
+                };
+                jsonOptions.Converters.Add(new JsonStringEnumConverter());
+                jsonOptions.Converters.Add(new DateTimeJsonConverter());
+                var jsonString = JsonSerializer.Serialize(request.Body, jsonOptions);
+                restRequest.AddJsonBody(jsonString, "application/json");
+                Debug.Print(jsonString);
             }
-            Debug.Print(JsonConvert.SerializeObject(request.Body));
             return await _restClient.ExecuteAsync<T>(restRequest);
         }
 
@@ -135,7 +143,7 @@ namespace CloudKitSharp.Core.Http
         }
         string MakeRequestBodyString(object requestBody)
         {
-            return JsonConvert.SerializeObject(requestBody);
+            return JsonSerializer.Serialize(requestBody);
         }
         string Base64EncodedBodyString(string body)
         {

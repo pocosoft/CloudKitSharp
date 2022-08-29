@@ -69,7 +69,6 @@ namespace CloudKitSharp.SampleWPF
         {
             InitializeComponent();
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             GetWebAuthToken(_webAuthToken);
@@ -95,18 +94,43 @@ namespace CloudKitSharp.SampleWPF
             var response = await _client.PostRecordsQuery(CKDatabase.Public, parameter, _webAuthToken);
             DebugConsole.Text = response.Content;
         }
+        private async void PostRecordsModifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var record  = new RecordDictionary()
+            {
+                recordName = "13C3B69E-A0E7-85CA-266C-767D1E58D891",
+                recordType = "Items",
+                fields = new 
+                {
+                    updateTime = new { value = DateTime.Now }
+                }
+            };
+            var parameter = new RecordsModifyRequest.Parameter()
+            {
+                operations = new()
+                {
+                    operationType = OperationTypeValues.forceUpdate,     
+                    record = record
+                },
+                zoneID = new()
+                {
+                    zoneName = "_defaultZone"
+                }
+            };
+            var response = await _client.PostRecordModify(CKDatabase.Private, parameter, _webAuthToken);
+            DebugConsole.Text = response.Content;
+        }
         private void GetWebAuthToken(string webAuthToken)
         {
             Debug.Print(webAuthToken);
             _webAuthToken = webAuthToken;
             GetUserCaller(_webAuthToken);
         }
-
         private async void GetUserCaller(string? webAuthToken)
         {
             var response = await _client.GetUsersCaller(webAuthToken);
             DebugConsole.Text = response.Content;
-
+            Debug.Print(response.Content);
             if (!response.IsSuccessful && response.Content != null)
             {
                 CKError error = CKError.Parse(response.Content);
