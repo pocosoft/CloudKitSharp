@@ -88,9 +88,12 @@ namespace CloudKitSharp.SampleWPF
             {
                 recordName = "13C3B69E-A0E7-85CA-266C-767D1E58D891",
                 recordType = "Items",
-                fields = new
+                fields = new Items()
                 {
-                    updateTime = new { value = DateTime.Now }
+                    count = new CKValue<int>()
+                    {
+                        value = 11
+                    }
                 }
             };
             var parameter = new RecordsModifyRequest.Parameter()
