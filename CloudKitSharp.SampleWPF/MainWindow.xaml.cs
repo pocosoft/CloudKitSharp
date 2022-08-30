@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CloudKitSharp.Core.Http;
+using CloudKitSharp.Core.Model;
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using CloudKitSharp.Core.Http;
-using CloudKitSharp.Core.Model;
 
 namespace CloudKitSharp.SampleWPF
 {
@@ -80,7 +68,7 @@ namespace CloudKitSharp.SampleWPF
         }
         private async void PostRecordsQueryButton_Click(object sender, RoutedEventArgs e)
         {
-            var parameter = new RecordsQueryRequest.Parameter() 
+            var parameter = new RecordsQueryRequest.Parameter()
             {
                 query = new()
                 {
@@ -96,11 +84,11 @@ namespace CloudKitSharp.SampleWPF
         }
         private async void PostRecordsModifyButton_Click(object sender, RoutedEventArgs e)
         {
-            var record  = new RecordDictionary()
+            var record = new RecordDictionary()
             {
                 recordName = "13C3B69E-A0E7-85CA-266C-767D1E58D891",
                 recordType = "Items",
-                fields = new 
+                fields = new
                 {
                     updateTime = new { value = DateTime.Now }
                 }
@@ -109,7 +97,7 @@ namespace CloudKitSharp.SampleWPF
             {
                 operations = new()
                 {
-                    operationType = OperationTypeValues.forceUpdate,     
+                    operationType = OperationTypeValues.forceUpdate,
                     record = record
                 },
                 zoneID = new()

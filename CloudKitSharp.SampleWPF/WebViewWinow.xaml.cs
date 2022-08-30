@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Web;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CloudKitSharp.SampleWPF
 {
@@ -32,7 +23,7 @@ namespace CloudKitSharp.SampleWPF
         }
 
         private void WebView_NavigationStarting(
-            object sender, 
+            object sender,
             Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
         {
             if (e.Uri.StartsWith("http://localhost"))
