@@ -11,6 +11,7 @@
             <Button Content="Get User caller" HorizontalAlignment="Left" Margin="16,0,16,0" VerticalAlignment="Top" Click="Button_Click"/>
             <Button Content="Get User discover" HorizontalAlignment="Left" Margin="16,0,16,0" VerticalAlignment="Top" Click="GetUserDiscoverButton_Click"/>
             <Button Content="Post Records query" HorizontalAlignment="Left" Margin="16,0,16,0" VerticalAlignment="Top" Click="PostRecordsQueryButton_Click"/>
+            <Button Content="Post Records modify" HorizontalAlignment="Left" Margin="16,0,16,0" VerticalAlignment="Top" Click="PostRecordsModifyButton_Click"/>
         </StackPanel>
         <ScrollViewer Background="Black" VerticalAlignment="Stretch">
             <TextBlock x:Name="DebugConsole" Foreground="White" Text="Debug console area"/>

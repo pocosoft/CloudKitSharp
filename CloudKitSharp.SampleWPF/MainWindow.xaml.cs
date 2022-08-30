@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CloudKitSharp.Core.Http;
+using CloudKitSharp.Core.Model;
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using CloudKitSharp.Core.Http;
-using CloudKitSharp.Core.Model;
 
 namespace CloudKitSharp.SampleWPF
 {
@@ -69,7 +57,6 @@ namespace CloudKitSharp.SampleWPF
         {
             InitializeComponent();
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             GetWebAuthToken(_webAuthToken);
@@ -81,7 +68,7 @@ namespace CloudKitSharp.SampleWPF
         }
         private async void PostRecordsQueryButton_Click(object sender, RoutedEventArgs e)
         {
-            var parameter = new RecordsQueryRequest.Parameter() 
+            var parameter = new RecordsQueryRequest.Parameter()
             {
                 query = new()
                 {
@@ -95,23 +82,51 @@ namespace CloudKitSharp.SampleWPF
             var response = await _client.PostRecordsQuery(CKDatabase.Public, parameter, _webAuthToken);
             DebugConsole.Text = response.Content;
         }
+        private async void PostRecordsModifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var record = new RecordDictionary()
+            {
+                recordName = "13C3B69E-A0E7-85CA-266C-767D1E58D891",
+                recordType = "Items",
+                fields = new Items()
+                {
+                    count = new CKValue<int>()
+                    {
+                        value = 11
+                    }
+                }
+            };
+            var parameter = new RecordsModifyRequest.Parameter()
+            {
+                operations = new()
+                {
+                    operationType = OperationTypeValues.forceUpdate,
+                    record = record
+                },
+                zoneID = new()
+                {
+                    zoneName = "_defaultZone"
+                }
+            };
+            var response = await _client.PostRecordModify(CKDatabase.Private, parameter, _webAuthToken);
+            DebugConsole.Text = response.Content;
+        }
         private void GetWebAuthToken(string webAuthToken)
         {
             Debug.Print(webAuthToken);
             _webAuthToken = webAuthToken;
             GetUserCaller(_webAuthToken);
         }
-
         private async void GetUserCaller(string? webAuthToken)
         {
             var response = await _client.GetUsersCaller(webAuthToken);
             DebugConsole.Text = response.Content;
-
+            Debug.Print(response.Content);
             if (!response.IsSuccessful && response.Content != null)
             {
                 CKError error = CKError.Parse(response.Content);
                 Debug.Print(error.RedirectURL);
-                var web = new WebViewWinow(new Uri(error.RedirectURL));
+                var web = new WebViewWinow(new Uri(error.RedirectURL!));
                 web.GetWebAuthTokenDelegate += GetWebAuthToken;
                 web.ShowDialog();
             }

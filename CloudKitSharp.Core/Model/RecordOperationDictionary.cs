@@ -7,5 +7,6 @@
     public class RecordOperationDictionary
     {
         public OperationTypeValues operationType { get; set; } = OperationTypeValues.update;
+        public RecordDictionary record { get; set; } = new();
     }
 }

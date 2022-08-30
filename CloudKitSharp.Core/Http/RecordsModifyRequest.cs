@@ -13,8 +13,8 @@ namespace CloudKitSharp.Core.Http
         public Method Method => Method.Post;
         public string SubPath => $"/{_database}/records/modify";
         public object? Body => _parameter;
-        private CKDatabase _database { get; }
-        private Parameter _parameter { get; }
+        private readonly CKDatabase _database;
+        private readonly Parameter _parameter;
         public RecordsModifyRequest(CKDatabase database, Parameter parameter)
         {
             _database = database;
@@ -22,8 +22,8 @@ namespace CloudKitSharp.Core.Http
         }
         public class Parameter
         {
-            public RecordOperationDictionary operations { get; set; }
-            public ZoneIDDictionary zoneID { get; set; }
+            public RecordOperationDictionary operations { get; set; } = new();
+            public ZoneIDDictionary zoneID { get; set; } = new();
 
             [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
             public bool numbersAsStrings { get; set; } = false;
