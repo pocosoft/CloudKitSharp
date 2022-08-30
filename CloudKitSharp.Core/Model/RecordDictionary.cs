@@ -6,7 +6,7 @@ namespace CloudKitSharp.Core.Model
     /// Record Dictionary
     /// </summary>
     /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/Types.html#//apple_ref/doc/uid/TP40015240-CH3-SW6"/>
-    public class RecordDictionary
+    public class RecordDictionary : CommonResponseKeys
     {
         /// <summary>
         /// The unique name used to identify the record within a zone.The default value is a random UUID.
