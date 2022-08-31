@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CloudKitSharp.Core.Model;
 
 namespace CloudKitSharp.Core.Http
 {
@@ -20,6 +21,7 @@ namespace CloudKitSharp.Core.Http
         private readonly string _apiToken;
         private readonly string _requestKeyID;
         private readonly string _privateKeyString;
+
         public CKClient(
             string container,
             string apiToken,
@@ -38,22 +40,24 @@ namespace CloudKitSharp.Core.Http
         /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/FetchCurrentUserIdentity.html#//apple_ref/doc/uid/TP40015240-CH27-SW1"/>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<RestResponse<UsersCallerResponse>> GetUsersCaller(string webAuthToken)
+        public async Task<CKResponse<UsersCallerResponse, CKError>> GetUsersCaller(string webAuthToken)
         {
             var request = new UsersCallerRequest();
-            return await Fetch<UsersCallerResponse>(request, webAuthToken);
+            return await Fetch<UsersCallerResponse, CKError>(request, webAuthToken);
         }
+
         /// <summary>
         /// Discovering All User Identities (GET users/discover)
         /// </summary>
         /// <see cref="https://developer.apple.com/library/archive/documentation/DataManagement/Conceptual/CloudKitWebServicesReference/DiscoveringAllUserIdentities.html#//apple_ref/doc/uid/TP40015240-CH31-SW1"/>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<RestResponse<UsersCallerResponse>> GetUsersDiscover(string webAuthToken)
+        public async Task<CKResponse<UsersCallerResponse, CKError>> GetUsersDiscover(string webAuthToken)
         {
             var request = new UserDiscoverRequest();
-            return await Fetch<UsersCallerResponse>(request, webAuthToken);
+            return await Fetch<UsersCallerResponse, CKError>(request, webAuthToken);
         }
+
         /// <summary>
         /// Fetching Records Using a Query (records/query)
         /// </summary>
@@ -61,11 +65,12 @@ namespace CloudKitSharp.Core.Http
         /// <param name="database"></param>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<RestResponse<RecordsQueryResponse>> PostRecordsQuery(CKDatabase database, RecordsQueryRequest.Parameter parameter, string webAuthToken)
+        public async Task<CKResponse<RecordsQueryResponse<T>, RecordFetchErrorDictionary>> PostRecordsQuery<T>(CKDatabase database, RecordsQueryRequest.Parameter parameter, string webAuthToken)
         {
             var request = new RecordsQueryRequest(database, parameter);
-            return await Fetch<RecordsQueryResponse>(request, webAuthToken);
+            return await Fetch<RecordsQueryResponse<T>, RecordFetchErrorDictionary>(request, webAuthToken);
         }
+
         /// <summary>
         ///  Modifying Records(records/modify)
         /// </summary>
@@ -74,24 +79,26 @@ namespace CloudKitSharp.Core.Http
         /// <param name="parameter"></param>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<RestResponse<RecordsModifyResponse>> PostRecordModify(CKDatabase database, RecordsModifyRequest.Parameter parameter, string webAuthToken)
+        public async Task<CKResponse<RecordsModifyResponse<T>, RecordFetchErrorDictionary>> PostRecordModify<T>(CKDatabase database, RecordsModifyRequest.Parameter parameter, string webAuthToken)
         {
             var request = new RecordsModifyRequest(database, parameter);
-            return await Fetch<RecordsModifyResponse>(request, webAuthToken);
+            return await Fetch<RecordsModifyResponse<T>, RecordFetchErrorDictionary>(request, webAuthToken);
         }
-        public async Task<RestResponse<T>> Fetch<T>(ICKRequest request, string webAuthToken)
+
+        public async Task<CKResponse<Success, Failure>> Fetch<Success, Failure>(ICKRequest request, string webAuthToken)
         {
             switch (request.Method)
             {
                 case Method.Get:
-                    return await Get<T>(request, webAuthToken);
+                    return await Get<Success, Failure>(request, webAuthToken);
                 case Method.Post:
-                    return await Post<T>(request, webAuthToken);
+                    return await Post<Success, Failure>(request, webAuthToken);
                 default:
                     throw new Exception();
             }
         }
-        async Task<RestResponse<T>> Get<T>(ICKRequest request, string webAuthToken)
+
+        async Task<CKResponse<Success, Failure>> Get<Success, Failure>(ICKRequest request, string webAuthToken)
         {
             var url = request.GetUrl(_container);
             Debug.Print(url);
@@ -101,9 +108,11 @@ namespace CloudKitSharp.Core.Http
             {
                 restRequest.AddQueryParameter(CKWebAuthTokenKey, webAuthToken);
             }
-            return await _restClient.ExecuteAsync<T>(restRequest);
+            var restResponse = await _restClient.ExecuteAsync<Success>(restRequest);
+            return new CKResponse<Success, Failure>(restResponse);
         }
-        async Task<RestResponse<T>> Post<T>(ICKRequest request, string webAuthToken)
+
+        async Task<CKResponse<Success, Failure>> Post<Success, Failure>(ICKRequest request, string webAuthToken)
         {
             var restRequest = new RestRequest(request.GetUrl(_container), Method.Post);
             Debug.Print("Request" + restRequest.ToString());
@@ -129,28 +138,33 @@ namespace CloudKitSharp.Core.Http
                 restRequest.AddJsonBody(jsonString, "application/json");
                 Debug.Print(jsonString);
             }
-            return await _restClient.ExecuteAsync<T>(restRequest);
+            var restResponse = await _restClient.ExecuteAsync<Success>(restRequest);
+            return new CKResponse<Success, Failure>(restResponse);
         }
 
         string MakeDateByISO8601(DateTime datetime)
         {
             return datetime.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'");
         }
+
         string MakeMessage(ICKRequest request, DateTime datetime)
         {
             var body = MakeRequestBodyString(request);
             return MakeDateByISO8601(datetime) + ":" + Base64EncodedBodyString(body) + ":" + request.Path(_container);
         }
+
         string MakeRequestBodyString(object requestBody)
         {
             return JsonSerializer.Serialize(requestBody);
         }
+
         string Base64EncodedBodyString(string body)
         {
             var bytes = Encoding.UTF8.GetBytes(body);
             var hashed = HashProvider.ComputeHash(bytes);
             return Convert.ToBase64String(hashed);
         }
+
         string MakeSignature(string message)
         {
             PrivateKey privateKey = PrivateKey.fromPem(_privateKeyString);
@@ -166,6 +180,7 @@ namespace CloudKitSharp.Core.Http
                 throw new Exception("著名失敗");
             }
         }
+
         private static readonly SHA256 HashProvider = SHA256.Create();
     }
 }
