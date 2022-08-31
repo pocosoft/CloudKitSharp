@@ -61,11 +61,13 @@ namespace CloudKitSharp.SampleWPF
         {
             GetWebAuthToken(_webAuthToken);
         }
+
         private async void GetUserDiscoverButton_Click(object sender, RoutedEventArgs e)
         {
             var response = await _client.GetUsersDiscover(_webAuthToken);
             DebugConsole.Text = response.Content;
         }
+
         private async void PostRecordsQueryButton_Click(object sender, RoutedEventArgs e)
         {
             var parameter = new RecordsQueryRequest.Parameter()
@@ -81,7 +83,16 @@ namespace CloudKitSharp.SampleWPF
             };
             var response = await _client.PostRecordsQuery(CKDatabase.Public, parameter, _webAuthToken);
             DebugConsole.Text = response.Content;
+            var data = response.Data;
+            if (data != null)
+            {
+                data.records?.ForEach(record =>
+                {
+                    Debug.Print(record.recordName);
+                });
+            }
         }
+
         private async void PostRecordsModifyButton_Click(object sender, RoutedEventArgs e)
         {
             var record = new RecordDictionary()
