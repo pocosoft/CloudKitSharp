@@ -65,10 +65,10 @@ namespace CloudKitSharp.Core.Http
         /// <param name="database"></param>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<CKResponse<RecordsQueryResponse, RecordFetchErrorDictionary>> PostRecordsQuery(CKDatabase database, RecordsQueryRequest.Parameter parameter, string webAuthToken)
+        public async Task<CKResponse<RecordsQueryResponse<T>, RecordFetchErrorDictionary>> PostRecordsQuery<T>(CKDatabase database, RecordsQueryRequest.Parameter parameter, string webAuthToken)
         {
             var request = new RecordsQueryRequest(database, parameter);
-            return await Fetch<RecordsQueryResponse, RecordFetchErrorDictionary>(request, webAuthToken);
+            return await Fetch<RecordsQueryResponse<T>, RecordFetchErrorDictionary>(request, webAuthToken);
         }
 
         /// <summary>
@@ -79,10 +79,10 @@ namespace CloudKitSharp.Core.Http
         /// <param name="parameter"></param>
         /// <param name="webAuthToken"></param>
         /// <returns></returns>
-        public async Task<CKResponse<RecordsModifyResponse, RecordFetchErrorDictionary>> PostRecordModify(CKDatabase database, RecordsModifyRequest.Parameter parameter, string webAuthToken)
+        public async Task<CKResponse<RecordsModifyResponse<T>, RecordFetchErrorDictionary>> PostRecordModify<T>(CKDatabase database, RecordsModifyRequest.Parameter parameter, string webAuthToken)
         {
             var request = new RecordsModifyRequest(database, parameter);
-            return await Fetch<RecordsModifyResponse, RecordFetchErrorDictionary>(request, webAuthToken);
+            return await Fetch<RecordsModifyResponse<T>, RecordFetchErrorDictionary>(request, webAuthToken);
         }
 
         public async Task<CKResponse<Success, Failure>> Fetch<Success, Failure>(ICKRequest request, string webAuthToken)

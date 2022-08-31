@@ -81,7 +81,7 @@ namespace CloudKitSharp.SampleWPF
                     zoneName = "_defaultZone"
                 }
             };
-            var response = await _client.PostRecordsQuery(CKDatabase.Public, parameter, _webAuthToken);
+            var response = await _client.PostRecordsQuery<Items>(CKDatabase.Public, parameter, _webAuthToken);
             DebugConsole.Text = response.Content;
             var data = response.Data;
             if (data != null)
@@ -89,6 +89,7 @@ namespace CloudKitSharp.SampleWPF
                 data.records?.ForEach(record =>
                 {
                     Debug.Print(record.recordName);
+                    Debug.Print(record.fields?.name?.value ?? "");
                 });
             }
         }
@@ -119,7 +120,7 @@ namespace CloudKitSharp.SampleWPF
                     zoneName = "_defaultZone"
                 }
             };
-            var response = await _client.PostRecordModify(CKDatabase.Private, parameter, _webAuthToken);
+            var response = await _client.PostRecordModify<Items>(CKDatabase.Private, parameter, _webAuthToken);
             DebugConsole.Text = response.Content;
         }
         private void GetWebAuthToken(string webAuthToken)

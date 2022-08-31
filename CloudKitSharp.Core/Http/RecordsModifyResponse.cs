@@ -13,7 +13,7 @@ namespace CloudKitSharp.Core.Http
         /// An array containing a result dictionary for each operation in the request. If successful, the result dictionary contains the keys described in Record Dictionary. If unsuccessful, the result dictionary contains the keys described in Record Fetch Error Dictionary.
         /// </summary>
         [JsonPropertyName("records")]
-        public RecordDictionary[]? records { get; set; }
+        public List<RecordDictionary>? records { get; set; }
     }
 
     /// <summary>
@@ -26,6 +26,6 @@ namespace CloudKitSharp.Core.Http
         /// An array containing a result dictionary for each operation in the request. If successful, the result dictionary contains the keys described in Record Dictionary. If unsuccessful, the result dictionary contains the keys described in Record Fetch Error Dictionary.
         /// </summary>
         [JsonPropertyName("records")]
-        public RecordDictionary<T>[]? records { get; set; }
+        public List<RecordDictionary<T>>? records { get; set; }
     }
 }
