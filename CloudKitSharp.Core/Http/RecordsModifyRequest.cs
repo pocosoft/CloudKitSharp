@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace CloudKitSharp.Core.Http
 {
-    public class RecordsModifyRequest : ICKRequest
+    public class RecordsModifyRequest<T> : ICKRequest
     {
         /// <summary>
         /// Modifying Records (records/modify)
@@ -22,7 +22,7 @@ namespace CloudKitSharp.Core.Http
         }
         public class Parameter
         {
-            public RecordOperationDictionary operations { get; set; } = new();
+            public RecordOperationDictionary<T> operations { get; set; } = new();
             public ZoneIDDictionary zoneID { get; set; } = new();
 
             [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]

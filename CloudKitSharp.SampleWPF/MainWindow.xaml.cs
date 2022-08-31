@@ -96,7 +96,7 @@ namespace CloudKitSharp.SampleWPF
 
         private async void PostRecordsModifyButton_Click(object sender, RoutedEventArgs e)
         {
-            var record = new RecordDictionary()
+            var record = new RecordDictionary<Items>()
             {
                 recordName = "13C3B69E-A0E7-85CA-266C-767D1E58D891",
                 recordType = "Items",
@@ -108,7 +108,7 @@ namespace CloudKitSharp.SampleWPF
                     }
                 }
             };
-            var parameter = new RecordsModifyRequest.Parameter()
+            var parameter = new RecordsModifyRequest<Items>.Parameter()
             {
                 operations = new()
                 {
