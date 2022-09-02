@@ -10,7 +10,7 @@ namespace CloudKitSharp.Core.Http
     {
         [JsonPropertyName("value")]
         public T? value { get; set; }
-        [JsonPropertyName("type"), JsonIgnore(Condition =JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("type"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? type
         {
             get

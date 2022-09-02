@@ -1,11 +1,11 @@
-﻿using EllipticCurve;
+﻿using CloudKitSharp.Core.Model;
+using EllipticCurve;
 using RestSharp;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using CloudKitSharp.Core.Model;
 
 namespace CloudKitSharp.Core.Http
 {

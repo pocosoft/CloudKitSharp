@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace CloudKitSharp.Core.Model
 {
@@ -25,7 +20,7 @@ namespace CloudKitSharp.Core.Model
         {
             [JsonPropertyName("deleted"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
             public long timestamp { get; set; } = -1;
-            [JsonPropertyName("userRecordName"), JsonIgnore(Condition =JsonIgnoreCondition.WhenWritingNull)]
+            [JsonPropertyName("userRecordName"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
             public string? userRecordName { get; set; }
             [JsonPropertyName("deviceID"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
             public string? deviceID { get; set; }
