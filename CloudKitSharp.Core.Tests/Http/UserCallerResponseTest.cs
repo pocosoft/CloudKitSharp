@@ -19,7 +19,7 @@ namespace CloudKitSharp.Core.Tests.Http
 }
 ";
             var result = JsonSerializer.Deserialize<CloudKitSharp.Core.Http.UsersCallerResponse>(jsonString);
-            Assert.Equal(result?.UserRecordName, "_d8e2b6c17258c644a282008756152412");
+            Assert.Equal("_d8e2b6c17258c644a282008756152412", result?.UserRecordName);
         }
     }
 }
