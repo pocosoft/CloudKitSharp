@@ -1,7 +1,10 @@
-﻿namespace CloudKitSharp.Core.Http
+﻿using System.Text.Json.Serialization;
+
+namespace CloudKitSharp.Core.Http
 {
     public class UsersCallerResponse
     {
-        public string? UserRecordName;
+        [JsonPropertyName("userRecordName")]
+        public string? UserRecordName { get; set; }
     }
 }
