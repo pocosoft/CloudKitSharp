@@ -2,9 +2,12 @@
 
 namespace CloudKitSharp.Core.Http
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserDiscoverRequest : ICKRequest
     {
-        public Method Method => Method.Get;
+        public Method Method => Method.Post;
 
         public string SubPath => "/public/users/discover";
 
