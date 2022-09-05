@@ -23,6 +23,8 @@ namespace CloudKitSharp.Core.Tests.Http
             Assert.Equal(150, firstRecord!.fields?.price?.value);
             Assert.Equal(40, firstRecord!.fields?.count?.value);
             Assert.Equal("Orange", firstRecord!.fields?.name?.value);
+            Assert.Equal("_d8e2b6c17258c644a282008756152412", firstRecord?.modified?.userRecordName);
+            Assert.Equal(1661798543871, firstRecord?.modified?.timestamp);
         }
 
         public class Items
