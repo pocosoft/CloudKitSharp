@@ -5,9 +5,9 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudKitSharp.Core", "CloudKitSharp.Core\CloudKitSharp.Core.csproj", "{182EE4E2-F82B-4949-B975-E821E811E209}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudKitSharp.Core.Test", "CloudKitSharp.Core.Test\CloudKitSharp.Core.Test.csproj", "{494A3661-47C1-492F-AE3C-5F38C7C387C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudKitSharp.SampleWPF", "CloudKitSharp.SampleWPF\CloudKitSharp.SampleWPF.csproj", "{55E2AB44-1460-4769-9F99-06C410499392}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudKitSharp.SampleWPF", "CloudKitSharp.SampleWPF\CloudKitSharp.SampleWPF.csproj", "{55E2AB44-1460-4769-9F99-06C410499392}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudKitSharp.Core.Tests", "CloudKitSharp.Core.Tests\CloudKitSharp.Core.Tests.csproj", "{5DC29356-EA98-400D-9A45-16F7D207B180}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{182EE4E2-F82B-4949-B975-E821E811E209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{182EE4E2-F82B-4949-B975-E821E811E209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{182EE4E2-F82B-4949-B975-E821E811E209}.Release|Any CPU.Build.0 = Release|Any CPU
-		{494A3661-47C1-492F-AE3C-5F38C7C387C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{494A3661-47C1-492F-AE3C-5F38C7C387C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{494A3661-47C1-492F-AE3C-5F38C7C387C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{494A3661-47C1-492F-AE3C-5F38C7C387C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55E2AB44-1460-4769-9F99-06C410499392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{55E2AB44-1460-4769-9F99-06C410499392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55E2AB44-1460-4769-9F99-06C410499392}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55E2AB44-1460-4769-9F99-06C410499392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DC29356-EA98-400D-9A45-16F7D207B180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DC29356-EA98-400D-9A45-16F7D207B180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DC29356-EA98-400D-9A45-16F7D207B180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DC29356-EA98-400D-9A45-16F7D207B180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
